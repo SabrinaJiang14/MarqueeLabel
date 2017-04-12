@@ -62,20 +62,27 @@ class MarqueeLabel: UILabel,CAAnimationDelegate {
     
     private func setLabelWith(){
         self.text = ""
+        if self.innerLabel.layer.animationKeys() != nil {
+            if (self.innerLabel.layer.animationKeys()?.count)! > 0 {
+                self.innerLabel.layer.removeAllAnimations()
+            }
+        }
         
-        let constraint:CGSize = CGSize.init(width: 200000, height: 40)
-        let attr:NSAttributedString = NSAttributedString.init(string: self.innerText!, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: self.innerSize!)])
-        let rect:CGRect = attr.boundingRect(with: constraint, options: .usesLineFragmentOrigin, context: nil)
-        let size:CGSize = rect.size
-        
-        self.innerLabel.frame.size.height = size.height
-        
-        if size.width > self.frame.size.width{
-            self.innerLabel.frame.size.width = size.width
-            self.startAnimation()
-        }else{
-            self.innerLabel.frame.size.width = self.frame.size.width
-            self.innerLabel.textAlignment = .center
+        if !(self.innerText?.isEmpty)! {
+            let constraint:CGSize = CGSize.init(width: 200000, height: 40)
+            let attr:NSAttributedString = NSAttributedString.init(string: self.innerText!, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: self.innerSize!)])
+            let rect:CGRect = attr.boundingRect(with: constraint, options: .usesLineFragmentOrigin, context: nil)
+            let size:CGSize = rect.size
+            
+            self.innerLabel.frame.size.height = size.height
+            
+            if size.width > self.frame.size.width{
+                self.innerLabel.frame.size.width = size.width
+                self.startAnimation()
+            }else{
+                self.innerLabel.frame.size.width = self.frame.size.width
+                self.innerLabel.textAlignment = .center
+            }
         }
     }
     
