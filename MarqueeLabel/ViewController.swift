@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.demoLabel.innerText = "Last year's bleaching event, the worst on record, mainly affected the north of the reef, while the recent damage has mostly impacted the middle sections, according to scientists at the ARC Centre of Excellence for Coral Reef Studies."
+        self.demoLabel.innerText = "Last year's bleaching event, the worst on record, mainly affected the north of the reef..."
         
         self.demoLabel.innerSize = 15
         self.demoLabel.innerColor = UIColor.blue
