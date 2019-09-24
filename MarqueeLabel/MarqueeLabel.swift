@@ -61,6 +61,7 @@ class MarqueeLabel: UILabel {
         }
     }
     
+
     private var innerLabel:UILabel = UILabel()
     private let innerLabelheight:CGFloat = 40.0
     private let innerLabelPadding:CGFloat = 10
@@ -89,6 +90,7 @@ class MarqueeLabel: UILabel {
         self.layer.masksToBounds = true
     }
     
+
     private func setup(){
         self.text = ""
         if self.innerLabel.layer.animationKeys() != nil {
