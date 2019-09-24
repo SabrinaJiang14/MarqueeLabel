@@ -8,9 +8,7 @@
 
 import UIKit
 
-class MarqueeLabel: UILabel,CAAnimationDelegate {
-
-
+class MarqueeLabel: UILabel {
     var innerText:String? {
         willSet {
             self.innerText = newValue
@@ -18,11 +16,10 @@ class MarqueeLabel: UILabel,CAAnimationDelegate {
         didSet {
             self.innerLabel.text = self.innerText
             if self.innerSize != nil{
-                self.setLabelWith()
+                self.setup()
             }
         }
     }
-    
     
     var innerColor:UIColor? {
         willSet {
@@ -40,27 +37,59 @@ class MarqueeLabel: UILabel,CAAnimationDelegate {
         didSet {
             self.innerLabel.font = UIFont.systemFont(ofSize: self.innerSize!)
             if self.innerText != nil {
-                self.setLabelWith()
+                self.setup()
             }
         }
     }
     
-    private var animation:CABasicAnimation
-    private var innerLabel:UILabel = UILabel.init()
+    var isShowAllText:Bool? = true {
+        willSet{
+            self.isShowAllText = newValue
+        }
+        didSet {
+            if self.isShowAllText != nil {
+                self.setup()
+            }
+        }
+    }
+    var isShowOpacity:Bool = true {
+        willSet {
+            self.isShowOpacity = newValue
+        }
+        didSet {
+            self.setup()
+        }
+    }
+    
+    private var innerLabel:UILabel = UILabel()
+    private let innerLabelheight:CGFloat = 40.0
+    private let innerLabelPadding:CGFloat = 10
+    private let durationTimeInterval:TimeInterval = 5.0
     
     required init?(coder aDecoder: NSCoder) {
-        self.animation = CABasicAnimation.init()
-        self.innerLabel = UILabel.init(frame: CGRect(x: 0, y: 0, width: 350, height: 40))
-        
         super.init(coder: aDecoder)
-        
+        self.initialize()
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.initialize()
+    }
+    
+    deinit {
+        print("== deinit ==")
+    }
+    
+    private func initialize() {
+        self.innerLabel = UILabel(frame: CGRect(x: innerLabelPadding, y: 0, width: UIScreen.main.bounds.size.width - (innerLabelPadding * 2), height: innerLabelheight))
+        self.innerLabel.frame.size.height = self.frame.height
         self.innerLabel.textAlignment = .left
         self.addSubview(self.innerLabel)
         
         self.layer.masksToBounds = true
     }
     
-    private func setLabelWith(){
+    private func setup(){
         self.text = ""
         if self.innerLabel.layer.animationKeys() != nil {
             if (self.innerLabel.layer.animationKeys()?.count)! > 0 {
@@ -69,35 +98,70 @@ class MarqueeLabel: UILabel,CAAnimationDelegate {
         }
         
         if !(self.innerText?.isEmpty)! {
-            let constraint:CGSize = CGSize.init(width: 200000, height: 40)
-            let attr:NSAttributedString = NSAttributedString.init(string: self.innerText!, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: self.innerSize!)])
-            let rect:CGRect = attr.boundingRect(with: constraint, options: .usesLineFragmentOrigin, context: nil)
-            let size:CGSize = rect.size
-            
-            self.innerLabel.frame.size.height = size.height
-            
-            if size.width > self.frame.size.width{
-                self.innerLabel.frame.size.width = size.width
-                self.startAnimation()
-            }else{
-                self.innerLabel.frame.size.width = self.frame.size.width
-                self.innerLabel.textAlignment = .center
-            }
+            self.startAnimation()
         }
     }
     
     private func startAnimation(){
-        let keyframe = CAKeyframeAnimation.init(keyPath: "position")
-        let value1 = NSValue.init(cgPoint: self.innerLabel.layer.position)
-        let value2 = NSValue.init(cgPoint: CGPoint.init(x: -(self.innerLabel.frame.size.width - self.innerLabel.layer.position.x - 5), y: self.innerLabel.layer.position.y))
         
-        let arr = [value1,value2]
-        keyframe.values = arr
-        keyframe.duration = 20
-        keyframe.repeatCount = HUGE
-        keyframe.keyTimes = [0.08,0.92]
+        let transform = isShowAllText! ? self.getTransformAllX() : self.getTransformX()
+        var animations:[CAAnimation] = [transform]
         
-        self.innerLabel.layer.add(keyframe, forKey: "KCKeyframeAnimation_Position")
+        if isShowOpacity {
+            let opacity = self.getOpacity()
+            animations.append(opacity)
+        }
         
+        let group = CAAnimationGroup()
+        group.animations = animations
+        group.duration = durationTimeInterval
+        group.repeatCount = Float.infinity
+        group.isRemovedOnCompletion = false
+        group.fillMode = .removed
+        
+        innerLabel.layer.add(group, forKey: "doit")
+    }
+    
+    private func getTransformAllX() -> CAKeyframeAnimation {
+        let newSize = innerLabel.sizeThatFits(CGSize(width: 200000, height: innerLabelheight))
+        innerLabel.frame.size.width = newSize.width
+        
+        let beginPointsX = UIScreen.main.bounds.size.width - innerLabelPadding
+        let endPointX =  (max(0, (newSize.width - UIScreen.main.bounds.size.width + (innerLabelPadding * 2))))
+        
+        let transform = CAKeyframeAnimation(keyPath: "transform.translation.x") // moving view along x direction
+        transform.timingFunctions = [CAMediaTimingFunction(name: .default)]  // array of timing function
+        transform.values = [beginPointsX, -endPointX] // taking the animated property values for animation
+        transform.keyTimes = [0.0, 0.8]  // define the timing array
+        transform.duration = durationTimeInterval // CFTimeInterval
+        transform.isRemovedOnCompletion = false // do not remove the animation effect, no state changes.
+        transform.fillMode = CAMediaTimingFillMode.forwards
+        transform.repeatCount = 1
+        return transform
+    }
+    
+    private func getTransformX() -> CAKeyframeAnimation {
+        innerLabel.frame.size.width = UIScreen.main.bounds.size.width - innerLabelPadding
+        
+        let beginPointsX = UIScreen.main.bounds.size.width - innerLabelPadding
+        
+        let transform = CAKeyframeAnimation(keyPath: "transform.translation.x") // moving view along x direction
+        transform.timingFunctions = [CAMediaTimingFunction(name: .default)]  // array of timing function
+        transform.values = [beginPointsX, 0] // taking the animated property values for animation
+        transform.keyTimes = [0.0, 0.8]  // define the timing array
+        transform.duration = durationTimeInterval // CFTimeInterval
+        transform.isRemovedOnCompletion = false // do not remove the animation effect, no state changes.
+        transform.fillMode = CAMediaTimingFillMode.forwards
+        transform.repeatCount = 1
+        return transform
+    }
+    
+    private func getOpacity() -> CAKeyframeAnimation {
+        let opacity = CAKeyframeAnimation(keyPath: "opacity")
+        opacity.timingFunctions = [CAMediaTimingFunction(name: .easeInEaseOut)]
+        opacity.duration = durationTimeInterval
+        opacity.keyTimes = [0.0, 0.1, 0.9, 1.0]
+        opacity.values = [0.0, 1.0, 1.0, 0.0]
+        return opacity
     }
 }

@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,9 +22,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gd9-HO-8P2" customClass="MarqueeLabel" customModule="MarqueeLabel" customModuleProvider="target">
-                                <rect key="frame" x="36" y="323.5" width="303" height="20.5"/>
+                                <rect key="frame" x="0.0" y="273.5" width="375" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20.5" id="mB9-vi-0L6"/>
+                                    <constraint firstAttribute="height" constant="20" id="y14-nm-vVn"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lG7-ig-JYv" customClass="MarqueeLabel" customModule="MarqueeLabel" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="318.5" width="375" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="6tV-LP-QKh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UrB-dv-vmA" customClass="MarqueeLabel" customModule="MarqueeLabel" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="384" width="375" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="mSr-Eg-uws"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -34,17 +51,26 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Gd9-HO-8P2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Gbx-qw-6qi"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Gd9-HO-8P2" secondAttribute="trailing" constant="20" id="KDI-Ab-IJt"/>
-                            <constraint firstItem="Gd9-HO-8P2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="Ui7-Mb-Va2"/>
+                            <constraint firstItem="UrB-dv-vmA" firstAttribute="top" secondItem="lG7-ig-JYv" secondAttribute="bottom" constant="20.5" id="4LW-4d-APm"/>
+                            <constraint firstItem="Gd9-HO-8P2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-50" id="Gbx-qw-6qi"/>
+                            <constraint firstItem="lG7-ig-JYv" firstAttribute="leading" secondItem="Gd9-HO-8P2" secondAttribute="leading" id="K85-96-J1R"/>
+                            <constraint firstItem="UrB-dv-vmA" firstAttribute="trailing" secondItem="lG7-ig-JYv" secondAttribute="trailing" id="Nl0-Xr-Yp2"/>
+                            <constraint firstItem="Gd9-HO-8P2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="azv-x9-3u3"/>
+                            <constraint firstItem="UrB-dv-vmA" firstAttribute="leading" secondItem="lG7-ig-JYv" secondAttribute="leading" id="ehA-nl-F4O"/>
+                            <constraint firstItem="lG7-ig-JYv" firstAttribute="trailing" secondItem="Gd9-HO-8P2" secondAttribute="trailing" id="k8i-hS-s62"/>
+                            <constraint firstAttribute="trailing" secondItem="Gd9-HO-8P2" secondAttribute="trailing" id="y3C-D8-6tJ"/>
+                            <constraint firstItem="lG7-ig-JYv" firstAttribute="top" secondItem="Gd9-HO-8P2" secondAttribute="bottom" constant="25" id="zCE-Tf-aak"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="demoLabel" destination="Gd9-HO-8P2" id="i6s-8b-XvC"/>
+                        <outlet property="demoLabel2" destination="lG7-ig-JYv" id="cmM-OQ-p6p"/>
+                        <outlet property="demoLabel3" destination="UrB-dv-vmA" id="rGJ-Zg-6XH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="53.600000000000001" y="27.436281859070466"/>
         </scene>
     </scenes>
 </document>
