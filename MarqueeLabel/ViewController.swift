@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.demoLabel.innerText = "Last year's bleaching event, the worst on record, mainly affected the north of the reef..."
+        self.demoLabel.innerText = "Last year's bleaching event, the worst on record, mainly affected the north of the reef!!!"
         self.demoLabel.innerSize = 15
         self.demoLabel.innerColor = UIColor.blue
         self.demoLabel.isShowOpacity = false
@@ -29,7 +29,7 @@ class ViewController: UIViewController {
         self.demoLabel2.innerColor = UIColor.green
         self.demoLabel2.isShowAllText = false
         
-        self.demoLabel3.innerText = "Last year's bleaching event, the worst on record, mainly affected the north of the reef..."
+        self.demoLabel3.innerText = "Last year's bleaching event, the worst on record, mainly affected the north of the reef!!!"
         self.demoLabel3.innerSize = 15
         self.demoLabel3.innerColor = UIColor.gray
         self.demoLabel3.isShowAllText = false

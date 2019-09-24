@@ -15,9 +15,7 @@ class MarqueeLabel: UILabel {
         }
         didSet {
             self.innerLabel.text = self.innerText
-            if self.innerSize != nil{
-                self.setup()
-            }
+            self.setup()
         }
     }
     
@@ -36,22 +34,19 @@ class MarqueeLabel: UILabel {
         }
         didSet {
             self.innerLabel.font = UIFont.systemFont(ofSize: self.innerSize!)
-            if self.innerText != nil {
-                self.setup()
-            }
+            self.setup()
         }
     }
     
-    var isShowAllText:Bool? = true {
+    var isShowAllText:Bool = true {
         willSet{
             self.isShowAllText = newValue
         }
         didSet {
-            if self.isShowAllText != nil {
-                self.setup()
-            }
+            self.setup()
         }
     }
+    
     var isShowOpacity:Bool = true {
         willSet {
             self.isShowOpacity = newValue
@@ -61,7 +56,6 @@ class MarqueeLabel: UILabel {
         }
     }
     
-
     private var innerLabel:UILabel = UILabel()
     private let innerLabelheight:CGFloat = 40.0
     private let innerLabelPadding:CGFloat = 10
@@ -78,7 +72,11 @@ class MarqueeLabel: UILabel {
     }
     
     deinit {
-        print("== deinit ==")
+        if self.innerLabel.layer.animationKeys() != nil {
+            if (self.innerLabel.layer.animationKeys()?.count)! > 0 {
+                self.innerLabel.layer.removeAllAnimations()
+            }
+        }
     }
     
     private func initialize() {
@@ -91,22 +89,21 @@ class MarqueeLabel: UILabel {
     }
     
 
-    private func setup(){
+    private func setup() {
+        guard let _ = innerText, let _ = innerSize else { return }
+        
         self.text = ""
         if self.innerLabel.layer.animationKeys() != nil {
             if (self.innerLabel.layer.animationKeys()?.count)! > 0 {
                 self.innerLabel.layer.removeAllAnimations()
             }
         }
-        
-        if !(self.innerText?.isEmpty)! {
-            self.startAnimation()
-        }
+        self.startAnimation()
     }
     
     private func startAnimation(){
         
-        let transform = isShowAllText! ? self.getTransformAllX() : self.getTransformX()
+        let transform = isShowAllText ? self.getTransformAllX() : self.getTransformX()
         var animations:[CAAnimation] = [transform]
         
         if isShowOpacity {
