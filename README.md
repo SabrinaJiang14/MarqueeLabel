@@ -7,9 +7,9 @@ Just run the example project, or clone the repo.
 
 
 ## Requirements
-* Xcode 8 or above
+* Xcode 10 or above
 * iOS 10
-* Swift 3
+* Swift 5
 
 
 ## How to use
@@ -38,6 +38,29 @@ self.demoLabel.innerColor = UIColor.blue
 
 ![GITHUB](https://github.com/SabrinaJiang14/MarqueeLabel/blob/master/Example/demo_vedio.gif "demo")
 
+## Customize property
+``` swift
+public var innerText: NSString 
+// Text
+```
+``` swift
+public var innerSize: CGFloat
+// The font size
+```
+``` swift
+public var innerColor: UIColor
+// The text foreground color
+```
+``` swift
+public var isShowAllText: Bool
+// The flag that you want to show full text or not.
+// Default is true
+```
+``` swift
+public var isShowOpacity: Bool
+// The flag that you want to fade out strings or not.
+// Default is true
+```
 
 # Licence
 Licence MIT
