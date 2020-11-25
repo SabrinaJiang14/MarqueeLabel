@@ -8,9 +8,16 @@
 
 import UIKit
 
+protocol MarqueeLabelProtocol : NSObjectProtocol {
+    func tap(sender:MarqueeLabel)
+}
+
 class MarqueeLabel: UILabel {
     //MARK: - public property
     var style:LabelStyle? { didSet { setupView() } }
+    var delegate:MarqueeLabelProtocol? {
+        didSet { self.isUserInteractionEnabled = true }
+    }
     
     //MARK: - private property
     private var innerLabel:UILabel = UILabel()
@@ -35,6 +42,21 @@ class MarqueeLabel: UILabel {
         }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if let animationKeys = self.innerLabel.layer.animationKeys(), animationKeys.count > 0 {
+            self.innerLabel.layer.removeAllAnimations()
+        }
+        
+        self.startAnimation()
+    }
+}
+
+extension MarqueeLabel {
+    @objc private func tapEventHandle() {
+        delegate?.tap(sender: self)
+    }
+    
     private func initialize() {
         self.innerLabel = UILabel(frame: .zero)
         self.innerLabel.textAlignment = .left
@@ -42,6 +64,8 @@ class MarqueeLabel: UILabel {
         self.addSubview(self.innerLabel)
         self.innerLabel.translatesAutoresizingMaskIntoConstraints = false
         self.layer.masksToBounds = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapEventHandle))
+        self.addGestureRecognizer(tap)
     }
     
     private func setupView() {
@@ -54,15 +78,6 @@ class MarqueeLabel: UILabel {
         self.isShowAllText = style.showFullText
         self.isShowOpacity = style.transparencyInTheEnd
         self.durationTimeInterval = style.duration
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if let animationKeys = self.innerLabel.layer.animationKeys(), animationKeys.count > 0 {
-            self.innerLabel.layer.removeAllAnimations()
-        }
-        
-        self.startAnimation()
     }
     
     private func startAnimation(){

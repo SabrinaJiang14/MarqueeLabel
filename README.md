@@ -60,6 +60,18 @@ style1.font = UIFont.boldSystemFont(ofSize: 15)
 style1.duration = 10
 ```
 
+## New Feature
+If you need tap event, implement this protocol, like as:
+``` swift
+self.demoLabel.delegate = self
+
+extension ViewController:MarqueeLabelProtocol {
+    func tap(sender: MarqueeLabel) {
+       	//Do something...
+    }
+}
+```
+
 
 # Licence
 Licence MIT

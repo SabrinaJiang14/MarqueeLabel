@@ -24,9 +24,11 @@ class ViewController: UIViewController {
         style1.font = UIFont.boldSystemFont(ofSize: 15)
         style1.duration = 10
         self.demoLabel.style = style1
+        self.demoLabel.delegate = self
         
         let style2 = DefaultStyle(text: "Stay Hungry. Stay Foolish.")
         self.demoLabel2.style = style2
+        self.demoLabel2.delegate = self
         
         var style3 = DefaultStyle(text: "Stay Hungry. Stay Foolish. And I have always wished that for myself. And now, as you graduate to begin anew, I wish that for you.")
         style3.backColor = .blue
@@ -41,3 +43,8 @@ class ViewController: UIViewController {
 
 }
 
+extension ViewController:MarqueeLabelProtocol {
+    func tap(sender: MarqueeLabel) {
+        print(sender.style?.text)
+    }
+}
