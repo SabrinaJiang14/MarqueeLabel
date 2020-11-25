@@ -26,12 +26,10 @@ Just run the example project, or clone the repo.
 
 ![GITHUB](https://github.com/SabrinaJiang14/MarqueeLabel/blob/master/Example/Referencing_Outlets.png "Referencing_Outlets")
 
-- Setp 5. Setting text, font size, and textColor
+- Setp 5. Setting text
 ``` swift
-self.demoLabel.innerText = "Last year's bleaching event, the worst on record, mainly affected the north of 
-  the reef..."   
-self.demoLabel.innerSize = 15
-self.demoLabel.innerColor = UIColor.blue
+self.demoLabel.style = DefaultStyle(text: "Stay Hungry. Stay Foolish.")
+
 ```
 
 - Setp 6. Build and run!
@@ -40,27 +38,28 @@ self.demoLabel.innerColor = UIColor.blue
 
 ## Customize property
 ``` swift
-public var innerText: NSString 
-// Text
+// the style must be init with text
+var style1 = DefaultStyle(text: "Stay Hungry. Stay Foolish.")
+
+// need show full text or not
+style1.showFullText = true
+
+// set text color
+style1.textColor = .blue
+
+// set back color
+style1.backColor = .clear
+
+// set whether to end the animation with transparency
+style1.opacityInTheEnd = true
+
+// set text font
+style1.font = UIFont.boldSystemFont(ofSize: 15)
+
+// set marquee time
+style1.duration = 10
 ```
-``` swift
-public var innerSize: CGFloat
-// The font size
-```
-``` swift
-public var innerColor: UIColor
-// The text foreground color
-```
-``` swift
-public var isShowAllText: Bool
-// The flag that you want to show full text or not.
-// Default is true
-```
-``` swift
-public var isShowOpacity: Bool
-// The flag that you want to fade out strings or not.
-// Default is true
-```
+
 
 # Licence
 Licence MIT

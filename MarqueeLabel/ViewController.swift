@@ -17,30 +17,27 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        var style1 = DefaultStyle(text: "Stay Hungry. Stay Foolish. And I have always wished that for myself. And now, as you graduate to begin anew, I wish that for you.")
+        style1.showFullText = true
+        style1.textColor = .blue
+        style1.transparencyInTheEnd = true
+        style1.font = UIFont.boldSystemFont(ofSize: 15)
+        style1.duration = 10
+        self.demoLabel.style = style1
         
-        self.demoLabel.innerText = "Last year's bleaching event, the worst on record, mainly affected the north of the reef!!!"
-        self.demoLabel.innerSize = 15
-        self.demoLabel.innerColor = UIColor.blue
-        self.demoLabel.isShowOpacity = false
-        self.demoLabel.isShowAllText = true
+        let style2 = DefaultStyle(text: "Stay Hungry. Stay Foolish.")
+        self.demoLabel2.style = style2
         
-        self.demoLabel2.innerText = "Searching for the lost continent of Mauritia"
-        self.demoLabel2.innerSize = 10
-        self.demoLabel2.innerColor = UIColor.green
-        self.demoLabel2.isShowAllText = false
-        
-        self.demoLabel3.innerText = "Last year's bleaching event, the worst on record, mainly affected the north of the reef!!!"
-        self.demoLabel3.innerSize = 15
-        self.demoLabel3.innerColor = UIColor.gray
-        self.demoLabel3.isShowAllText = false
-        self.demoLabel.isShowOpacity = true
+        var style3 = DefaultStyle(text: "Stay Hungry. Stay Foolish. And I have always wished that for myself. And now, as you graduate to begin anew, I wish that for you.")
+        style3.backColor = .blue
+        style3.textColor = .white
+        self.demoLabel3.style = style3
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 
 }
 

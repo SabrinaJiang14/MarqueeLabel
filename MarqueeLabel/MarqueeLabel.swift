@@ -9,57 +9,15 @@
 import UIKit
 
 class MarqueeLabel: UILabel {
-    var innerText:String? {
-        willSet {
-            self.innerText = newValue
-        }
-        didSet {
-            self.innerLabel.text = self.innerText
-            self.setup()
-        }
-    }
+    //MARK: - public property
+    var style:LabelStyle? { didSet { setupView() } }
     
-    var innerColor:UIColor? {
-        willSet {
-            self.innerColor = newValue
-        }
-        didSet {
-            self.innerLabel.textColor = self.innerColor
-        }
-    }
-    
-    var innerSize:CGFloat? {
-        willSet {
-            self.innerSize = newValue
-        }
-        didSet {
-            self.innerLabel.font = UIFont.systemFont(ofSize: self.innerSize!)
-            self.setup()
-        }
-    }
-    
-    var isShowAllText:Bool = true {
-        willSet{
-            self.isShowAllText = newValue
-        }
-        didSet {
-            self.setup()
-        }
-    }
-    
-    var isShowOpacity:Bool = true {
-        willSet {
-            self.isShowOpacity = newValue
-        }
-        didSet {
-            self.setup()
-        }
-    }
-    
+    //MARK: - private property
     private var innerLabel:UILabel = UILabel()
-    private let innerLabelheight:CGFloat = 40.0
     private let innerLabelPadding:CGFloat = 10
-    private let durationTimeInterval:TimeInterval = 5.0
+    private var durationTimeInterval:TimeInterval = 0.0
+    private var isShowAllText:Bool = true
+    private var isShowOpacity:Bool = true
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -72,32 +30,38 @@ class MarqueeLabel: UILabel {
     }
     
     deinit {
-        if self.innerLabel.layer.animationKeys() != nil {
-            if (self.innerLabel.layer.animationKeys()?.count)! > 0 {
-                self.innerLabel.layer.removeAllAnimations()
-            }
+        if let animationKeys = self.innerLabel.layer.animationKeys(), animationKeys.count > 0 {
+            self.innerLabel.layer.removeAllAnimations()
         }
     }
     
     private func initialize() {
-        self.innerLabel = UILabel(frame: CGRect(x: innerLabelPadding, y: 0, width: UIScreen.main.bounds.size.width - (innerLabelPadding * 2), height: innerLabelheight))
-        self.innerLabel.frame.size.height = self.frame.height
+        self.innerLabel = UILabel(frame: .zero)
         self.innerLabel.textAlignment = .left
+        self.innerLabel.backgroundColor = .clear
         self.addSubview(self.innerLabel)
-        
+        self.innerLabel.translatesAutoresizingMaskIntoConstraints = false
         self.layer.masksToBounds = true
     }
     
-
-    private func setup() {
-        guard let _ = innerText, let _ = innerSize else { return }
-        
+    private func setupView() {
+        guard let style = style else { return }
         self.text = ""
-        if self.innerLabel.layer.animationKeys() != nil {
-            if (self.innerLabel.layer.animationKeys()?.count)! > 0 {
-                self.innerLabel.layer.removeAllAnimations()
-            }
+        self.innerLabel.text = style.text
+        self.innerLabel.textColor = style.textColor
+        self.backgroundColor = style.backColor
+        self.innerLabel.font = style.font
+        self.isShowAllText = style.showFullText
+        self.isShowOpacity = style.transparencyInTheEnd
+        self.durationTimeInterval = style.duration
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if let animationKeys = self.innerLabel.layer.animationKeys(), animationKeys.count > 0 {
+            self.innerLabel.layer.removeAllAnimations()
         }
+        
         self.startAnimation()
     }
     
@@ -122,11 +86,15 @@ class MarqueeLabel: UILabel {
     }
     
     private func getTransformAllX() -> CAKeyframeAnimation {
-        let newSize = innerLabel.sizeThatFits(CGSize(width: 200000, height: innerLabelheight))
-        innerLabel.frame.size.width = newSize.width
+        let newSize = innerLabel.sizeThatFits(CGSize(width: 200000, height: self.frame.height))
+        
+        NSLayoutConstraint.activate([innerLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: innerLabelPadding),
+                                     innerLabel.topAnchor.constraint(equalTo: self.topAnchor),
+                                     innerLabel.widthAnchor.constraint(equalToConstant: newSize.width),
+                                     innerLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)])
         
         let beginPointsX = UIScreen.main.bounds.size.width - innerLabelPadding
-        let endPointX =  (max(0, (newSize.width - UIScreen.main.bounds.size.width + (innerLabelPadding * 2))))
+        let endPointX = (max(0, (newSize.width - UIScreen.main.bounds.size.width + (innerLabelPadding * 2))))
         
         let transform = CAKeyframeAnimation(keyPath: "transform.translation.x") // moving view along x direction
         transform.timingFunctions = [CAMediaTimingFunction(name: .default)]  // array of timing function
@@ -140,7 +108,11 @@ class MarqueeLabel: UILabel {
     }
     
     private func getTransformX() -> CAKeyframeAnimation {
-        innerLabel.frame.size.width = UIScreen.main.bounds.size.width - innerLabelPadding
+        let newWidth = UIScreen.main.bounds.size.width - innerLabelPadding
+        NSLayoutConstraint.activate([innerLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: innerLabelPadding),
+                                     innerLabel.topAnchor.constraint(equalTo: self.topAnchor),
+                                     innerLabel.widthAnchor.constraint(equalToConstant: newWidth),
+                                     innerLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)])
         
         let beginPointsX = UIScreen.main.bounds.size.width - innerLabelPadding
         
