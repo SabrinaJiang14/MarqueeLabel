@@ -7,8 +7,8 @@ Just run the example project, or clone the repo.
 
 
 ## Requirements
-* Xcode 10 or above
-* iOS 10
+* Xcode 12 or above
+* iOS 14
 * Swift 5
 
 
