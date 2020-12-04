@@ -61,7 +61,7 @@ style1.duration = 10
 ```
 
 ## New Feature
-If you need tap event, implement this protocol, like as:
+Implement this protocol if you need tap event, like as:
 ``` swift
 self.demoLabel.delegate = self
 

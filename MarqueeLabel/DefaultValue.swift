@@ -7,6 +7,25 @@
 //
 
 import UIKit
+@propertyWrapper
+struct Default<T : Equatable> {
+    private var value : T
+    
+    init(_ value: T) {
+        self.value = value
+    }
+    
+    var wrappedValue: T {
+        get { return value }
+        set { value = newValue }
+    }
+}
+
+extension Bool {
+    enum False {
+        
+    }
+}
 
 @propertyWrapper
 struct False {
@@ -84,10 +103,10 @@ struct DefaultStyle : LabelStyle {
     var text: String
     
     @Color(value: .black) var textColor: UIColor
-    @Color(value: .clear) var backColor: UIColor
+    @Default(UIColor.clear) var backColor: UIColor
     
     @False var showFullText: Bool
-    @False var transparencyInTheEnd: Bool
+    @Default(false) var transparencyInTheEnd: Bool
     
     @Font(value: .systemFont(ofSize: 15)) var font: UIFont
     @Interval(value: 5) var duration: TimeInterval

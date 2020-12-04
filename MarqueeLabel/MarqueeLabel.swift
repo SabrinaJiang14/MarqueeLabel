@@ -12,7 +12,10 @@ protocol MarqueeLabelProtocol : NSObjectProtocol {
     func tap(sender:MarqueeLabel)
 }
 
-class MarqueeLabel: UILabel {
+typealias Label = UIView
+
+@dynamicMemberLookup
+class MarqueeLabel: Label {
     //MARK: - public property
     var style:LabelStyle? { didSet { setupView() } }
     var delegate:MarqueeLabelProtocol? {
@@ -36,6 +39,14 @@ class MarqueeLabel: UILabel {
         self.initialize()
     }
     
+    subscript<T>(dynamicMember keypath:ReferenceWritableKeyPath<UILabel, T>) -> T {
+        get { innerLabel[keyPath: keypath] }
+        set {
+            if keypath == \UILabel.numberOfLines { return }
+            innerLabel[keyPath: keypath] = newValue
+        }
+    }
+        
     deinit {
         if let animationKeys = self.innerLabel.layer.animationKeys(), animationKeys.count > 0 {
             self.innerLabel.layer.removeAllAnimations()
@@ -58,11 +69,12 @@ extension MarqueeLabel {
     }
     
     private func initialize() {
-        self.innerLabel = UILabel(frame: .zero)
-        self.innerLabel.textAlignment = .left
-        self.innerLabel.backgroundColor = .clear
-        self.addSubview(self.innerLabel)
-        self.innerLabel.translatesAutoresizingMaskIntoConstraints = false
+//        innerLabel.layer.shouldRasterize = true
+        innerLabel.textAlignment = .left
+        innerLabel.backgroundColor = .clear
+        innerLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(innerLabel)
+        self.layer.shouldRasterize = true
         self.layer.masksToBounds = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapEventHandle))
         self.addGestureRecognizer(tap)
@@ -70,7 +82,6 @@ extension MarqueeLabel {
     
     private func setupView() {
         guard let style = style else { return }
-        self.text = ""
         self.innerLabel.text = style.text
         self.innerLabel.textColor = style.textColor
         self.backgroundColor = style.backColor

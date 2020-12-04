@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
         var style1 = DefaultStyle(text: "Stay Hungry. Stay Foolish. And I have always wished that for myself. And now, as you graduate to begin anew, I wish that for you.")
         style1.showFullText = true
         style1.textColor = .blue
@@ -33,7 +33,14 @@ class ViewController: UIViewController {
         var style3 = DefaultStyle(text: "Stay Hungry. Stay Foolish. And I have always wished that for myself. And now, as you graduate to begin anew, I wish that for you.")
         style3.backColor = .blue
         style3.textColor = .white
+        style3.font = .preferredFont(forTextStyle: .title1)
         self.demoLabel3.style = style3
+        
+        let label = MarqueeLabel(frame: CGRect(x: 0, y: 650, width: UIScreen.main.bounds.width, height: 40))
+        self.view.addSubview(label)
+        label.style = style2
+        label.font = .preferredFont(forTextStyle: .largeTitle)
+        label.textColor = .green
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,6 +52,8 @@ class ViewController: UIViewController {
 
 extension ViewController:MarqueeLabelProtocol {
     func tap(sender: MarqueeLabel) {
-        print(sender.style?.text)
+        if let style = sender.style {
+            print(style.text)
+        }
     }
 }
