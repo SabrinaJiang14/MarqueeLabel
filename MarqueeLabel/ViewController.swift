@@ -17,30 +17,28 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var style1 = DefaultStyle(text: "Stay Hungry. Stay Foolish. And I have always wished that for myself. And now, as you graduate to begin anew, I wish that for you.")
+        var style1 = DefaultStyle()
         style1.showFullText = true
-        style1.textColor = .blue
         style1.transparencyInTheEnd = true
-        style1.font = UIFont.boldSystemFont(ofSize: 15)
         style1.duration = 10
         self.demoLabel.style = style1
+        self.demoLabel.text = "Stay Hungry. Stay Foolish. And I have always wished that for myself. And now, as you graduate to begin anew, I wish that for you."
+        self.demoLabel.textColor = .blue
+        self.demoLabel.font = UIFont.boldSystemFont(ofSize: 15)
         self.demoLabel.delegate = self
         
-        let style2 = DefaultStyle(text: "Stay Hungry. Stay Foolish.")
+        let style2 = DefaultStyle()
         self.demoLabel2.style = style2
+        self.demoLabel2.text = "Stay Hungry. Stay Foolish. "
         self.demoLabel2.delegate = self
         
-        var style3 = DefaultStyle(text: "Stay Hungry. Stay Foolish. And I have always wished that for myself. And now, as you graduate to begin anew, I wish that for you.")
+        var style3 = DefaultStyle()
         style3.backColor = .blue
-        style3.textColor = .white
-        style3.font = .preferredFont(forTextStyle: .title1)
+        style3.showFullText = true
         self.demoLabel3.style = style3
-        
-        let label = MarqueeLabel(frame: CGRect(x: 0, y: 650, width: UIScreen.main.bounds.width, height: 40))
-        self.view.addSubview(label)
-        label.style = style2
-        label.font = .preferredFont(forTextStyle: .largeTitle)
-        label.textColor = .green
+        self.demoLabel3.text = "Stay Hungry. Stay Foolish. And I have always wished that for myself."
+        self.demoLabel3.textColor = .white
+        self.demoLabel3.font = .preferredFont(forTextStyle: .title1)
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,8 +50,6 @@ class ViewController: UIViewController {
 
 extension ViewController:MarqueeLabelProtocol {
     func tap(sender: MarqueeLabel) {
-        if let style = sender.style {
-            print(style.text)
-        }
+        print(sender.text)
     }
 }

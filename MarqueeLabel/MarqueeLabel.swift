@@ -69,12 +69,11 @@ extension MarqueeLabel {
     }
     
     private func initialize() {
-//        innerLabel.layer.shouldRasterize = true
+        innerLabel.layer.shouldRasterize = true
         innerLabel.textAlignment = .left
         innerLabel.backgroundColor = .clear
         innerLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(innerLabel)
-        self.layer.shouldRasterize = true
         self.layer.masksToBounds = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapEventHandle))
         self.addGestureRecognizer(tap)
@@ -82,10 +81,7 @@ extension MarqueeLabel {
     
     private func setupView() {
         guard let style = style else { return }
-        self.innerLabel.text = style.text
-        self.innerLabel.textColor = style.textColor
         self.backgroundColor = style.backColor
-        self.innerLabel.font = style.font
         self.isShowAllText = style.showFullText
         self.isShowOpacity = style.transparencyInTheEnd
         self.durationTimeInterval = style.duration
@@ -108,7 +104,7 @@ extension MarqueeLabel {
         group.isRemovedOnCompletion = false
         group.fillMode = .removed
         
-        innerLabel.layer.add(group, forKey: "doit")
+        innerLabel.layer.add(group, forKey: "com.marqueeLabel.animation.group")
     }
     
     private func getTransformAllX() -> CAKeyframeAnimation {
@@ -128,7 +124,7 @@ extension MarqueeLabel {
         transform.keyTimes = [0.0, 0.8]  // define the timing array
         transform.duration = durationTimeInterval // CFTimeInterval
         transform.isRemovedOnCompletion = false // do not remove the animation effect, no state changes.
-        transform.fillMode = CAMediaTimingFillMode.forwards
+        transform.fillMode = .forwards
         transform.repeatCount = 1
         return transform
     }
@@ -148,7 +144,7 @@ extension MarqueeLabel {
         transform.keyTimes = [0.0, 0.8]  // define the timing array
         transform.duration = durationTimeInterval // CFTimeInterval
         transform.isRemovedOnCompletion = false // do not remove the animation effect, no state changes.
-        transform.fillMode = CAMediaTimingFillMode.forwards
+        transform.fillMode = .forwards
         transform.repeatCount = 1
         return transform
     }

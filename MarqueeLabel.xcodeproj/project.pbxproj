@@ -59,13 +59,13 @@
 			isa = PBXGroup;
 			children = (
 				7145C3861E9CD1DD004C5B22 /* MarqueeLabel.swift */,
+				04EC7106256E2B9C00292662 /* DefaultValue.swift */,
 				7145C3741E9CD157004C5B22 /* AppDelegate.swift */,
 				7145C3761E9CD157004C5B22 /* ViewController.swift */,
 				7145C3781E9CD157004C5B22 /* Main.storyboard */,
 				7145C37B1E9CD157004C5B22 /* Assets.xcassets */,
 				7145C37D1E9CD157004C5B22 /* LaunchScreen.storyboard */,
 				7145C3801E9CD157004C5B22 /* Info.plist */,
-				04EC7106256E2B9C00292662 /* DefaultValue.swift */,
 			);
 			path = MarqueeLabel;
 			sourceTree = "<group>";

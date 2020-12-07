@@ -65,18 +65,6 @@ struct Color {
 }
 
 @propertyWrapper
-struct Font {
-    private var value : UIFont
-    init(value:UIFont) {
-        self.value = value
-    }
-    var wrappedValue : UIFont {
-        get { return value }
-        set { value = newValue }
-    }
-}
-
-@propertyWrapper
 struct Interval {
     private var value : TimeInterval
     init(value:TimeInterval) {
@@ -89,25 +77,25 @@ struct Interval {
 }
 
 protocol LabelStyle {
-    var text:String { get set }
-    var textColor:UIColor { get }
+    /** Set up Label backgeround color, default color is clear. */
     var backColor:UIColor { get }
+    
+    /** Show all text in label, default is false. */
     var showFullText:Bool { get set }
+    
+    /** Show transparency in animation end, default is false. */
     var transparencyInTheEnd:Bool { get }
-    var font:UIFont { get }
+    
+    /** Animation interval, default is 0. */
     var duration:TimeInterval { get }
 }
 
 struct DefaultStyle : LabelStyle {
     
-    var text: String
-    
-    @Color(value: .black) var textColor: UIColor
     @Default(UIColor.clear) var backColor: UIColor
     
     @False var showFullText: Bool
     @Default(false) var transparencyInTheEnd: Bool
     
-    @Font(value: .systemFont(ofSize: 15)) var font: UIFont
     @Interval(value: 5) var duration: TimeInterval
 }
