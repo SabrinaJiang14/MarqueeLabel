@@ -50,6 +50,8 @@ class ViewController: UIViewController {
 
 extension ViewController:MarqueeLabelProtocol {
     func tap(sender: MarqueeLabel) {
-        print(sender.text)
+        if let text = sender.text {
+            print(text)
+        }
     }
 }
