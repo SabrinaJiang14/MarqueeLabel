@@ -28,8 +28,20 @@ Just run the example project, or clone the repo.
 
 - Setp 5. Setting text
 ``` swift
-self.demoLabel.style = DefaultStyle(text: "Stay Hungry. Stay Foolish.")
+// Create new label
+let label = MarqueeLabel()
 
+// Set up default style
+label.style = DefaultStyle()
+
+// Set up the text using default property
+lable.text = "Stay Hungry. Stay Foolish. And I have always wished that for myself."
+
+// Update the text color using default property
+label.textColor = .blue
+
+//  Update the text font using default property
+label.font = .preferredFont(forTextStyle: .title1)
 ```
 
 - Setp 6. Build and run!
@@ -52,12 +64,6 @@ style1.opacityInTheEnd = true
 
 // set marquee time
 style1.duration = 10
-
-let label = MarqueeLabel()
-label.style = style1
-lable.text = "Stay Hungry. Stay Foolish. And I have always wished that for myself."
-label.textColor = .blue
-label.font = .preferredFont(forTextStyle: .title1)
 ```
 
 ## New Feature
