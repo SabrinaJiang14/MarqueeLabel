@@ -39,13 +39,10 @@ self.demoLabel.style = DefaultStyle(text: "Stay Hungry. Stay Foolish.")
 ## Customize property
 ``` swift
 // the style must be init with text
-var style1 = DefaultStyle(text: "Stay Hungry. Stay Foolish.")
+var style1 = DefaultStyle()
 
 // need show full text or not
 style1.showFullText = true
-
-// set text color
-style1.textColor = .blue
 
 // set back color
 style1.backColor = .clear
@@ -53,11 +50,14 @@ style1.backColor = .clear
 // set whether to end the animation with transparency
 style1.opacityInTheEnd = true
 
-// set text font
-style1.font = UIFont.boldSystemFont(ofSize: 15)
-
 // set marquee time
 style1.duration = 10
+
+let label = MarqueeLabel()
+label.style = style1
+lable.text = "Stay Hungry. Stay Foolish. And I have always wished that for myself."
+label.textColor = .blue
+label.font = .preferredFont(forTextStyle: .title1)
 ```
 
 ## New Feature
