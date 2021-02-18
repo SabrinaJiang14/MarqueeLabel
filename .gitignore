@@ -20,3 +20,5 @@ DerivedData
 
 #CocoaPods
 Pods
+MarqueeLabel.xcodeproj/project.xcworkspace/xcuserdata
+.DS_Store
